@@ -1,22 +1,13 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
 		<meta charset="UTF-8">
 		<title>WebView Test</title>
 	</head>
-
 	<body>
 		<script>
-			setTimeout("getToken()",50);
-			document.location.href="https://gank.io";
-			function getToken(){
-				let abc = JSOjbect.getToken();
-				alert(abc);
-			}
-
+			var result = window.JSOjbect.getToken();
+			alert("result:" + result);
 		</script>
-
 	</body>
-
 </html>
