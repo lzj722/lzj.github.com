@@ -1,0 +1,90 @@
+<body>
+<div id='panel'>
+</div>
+<script>
+	var position = [];
+	var path = [];
+	
+	/*
+		view internal property of window
+	*/
+	function windowInternal(){
+		let tar = window;
+		position.push('window');
+		path.push(tar);
+		let properties = Object.getOwnPropertyDescriptors(tar);
+		let panel = document.getElementById('panel');
+		let innerHTMLText = "<h3>"+ position.join('.') +"</h3>";
+		
+		for(let propName in tar){
+			let propType = typeof tar[propName];
+			if( propType == 'object' && tar[propName]!= null){
+				innerHTMLText += "<b><i onclick='viewInternal(" + position.join('.') + ",`" + propName + "`)'>" +  position.join('.') + '.' + propName + "</i></b>&nbsp&nbsp&nbsp";
+				innerHTMLText += "<i>" + propType + "</i>";
+				innerHTMLText += "<br>";
+			}else{
+				innerHTMLText += "<text>" + position.join('.') + '.' + propName + "</text>&nbsp&nbsp&nbsp";
+				innerHTMLText += "<text>" + propType + "</text>";
+				innerHTMLText += "<br>";
+			}
+		}
+		
+		//for( let propName of Object.getOwnPropertyNames(properties) ){
+		//	let propType = typeof tar[propName];
+		//	if( typeof tar[propName] == 'object' && tar[propName]!= null){
+		//		innerHTMLText += "<b><i onclick='viewInternal(" + position.join('.') + ",`" + propName + "`)'>" +  position.join('.') + '.' + propName + "</i></b>&nbsp&nbsp&nbsp";
+		//		innerHTMLText += "<i>" + propType + "</i>";
+		//		innerHTMLText += "<br>";
+		//	}else{
+		//		innerHTMLText += "<text>" + position.join('.') + '.' + propName + "</text>&nbsp&nbsp&nbsp";
+		//		innerHTMLText += "<text>" + propType + "</text>";
+		//		innerHTMLText += "<br>";
+		//	}
+		//}
+		panel.innerHTML = innerHTMLText;
+	}
+	
+	/*
+		view internal property of the obj
+	*/
+	function viewInternal(obj, prop){
+		let tar = obj[prop];
+		position.push(prop);
+		path.push(obj);
+		let properties = Object.getOwnPropertyDescriptors(tar);
+		let panel = document.getElementById('panel');
+		let innerHTMLText = "<button onclick='backtrack()'>Back</button>"
+		innerHTMLText += "<h3>"+ position.join('.') +"</h3>";
+		for(let propName in tar){
+			let propType = typeof tar[propName];
+			if( propType == 'object' && tar[propName]!= null){
+				innerHTMLText += "<b><i onclick='viewInternal(" + position.join('.') + ",`" + propName + "`)'>" +  position.join('.') + '.' + propName + "</i></b>&nbsp&nbsp&nbsp";
+				innerHTMLText += "<i>" + propType + "</i>";
+				innerHTMLText += "<br>";
+			}else{
+				innerHTMLText += "<text>" + position.join('.') + '.' + propName + "</text>&nbsp&nbsp&nbsp";
+				innerHTMLText += "<text>" + propType + "</text>";
+				innerHTMLText += "<br>";
+			}
+		}
+		panel.innerHTML = innerHTMLText;
+	}
+	
+	function backtrack(){
+		let obj = path.pop();
+		let prop = position.pop();
+		
+		obj = path.pop();
+		prop = position.pop();
+		//alert(prop);
+		//alert(obj);
+		if(obj == undefined || prop == undefined){
+			windowInternal();
+		}
+		viewInternal(obj, prop);
+	}
+	
+	windowInternal();
+	
+</script>
+</body>
