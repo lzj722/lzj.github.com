@@ -7,21 +7,19 @@
 	</head>
 
 	<body>
-		<script>
-
+<script>
   function browser_navigation(){
-
-    JSObject.loadUrl("https://www.huawei.com")
-
+    myObj.loadUrl("https://segmentfault.com")
   }
-function bypass(){
-
+ 
+  function getToken(){
+    myObj.getToken();
+  }
+ 
+  function bypass(){
     setTimeout(getToken,400);
-
     browser_navigation();
-
   }
-
 </script>
 
 	</body>
